@@ -16,11 +16,14 @@ https://github.com/vindukatta/fibonacci-rest
 
 ============================================================================
 Prereqs: Java must be installed and JAVA_HOME defined
+
 Goals: Defined 3 goals in POM - clean, compile, test. Run the following
 
 //prerequisite: start server
+
 mvn compile exec:java
 
 //run test
+
 mvn clean compile test
 
