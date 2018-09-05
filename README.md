@@ -15,7 +15,7 @@ Fork:
 https://github.com/vindukatta/fibonacci-rest
 
 ============================================================================
-Prereqs: Java must be installed and JAVA_HOME defined
+Prereqs: Java must be installed and JAVA_HOME defined in environment variables (Ex: JAVA_HOME=C:\Program Files\Java\jdk-10.0.1)
 
 Goals: Defined 3 goals in POM - clean, compile, test. Run the following
 
