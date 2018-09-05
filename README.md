@@ -1,14 +1,26 @@
-# Testing Rest Services
+When does the application STOP returning Fibonacci numbers in their correct sequence?
 
-There are a number of endpoints in this application.  The following question needs to be answered:
+- From positive index 29 i.e "514228" onwards the series is returning incorrect value
+- From negative index 25 i.e "75025" onwards the series is returning incorrect value
 
-- When does the application STOP returning Fibonacci numbers in their correct sequence?
+http://localhost:7003/fib/range?startIndex=-27&finishIndex=30
+["196419","-121393","75025","-46368","28657","-17711","10946","-6765","4181","-2584","1597","-987","610","-377","233","-144","89","-55","34","-21","13",
+"-8","5","-3","2","-1","1","0","1","1","2","3","5","8","13","21","34","55","89","144","233","377","610","987","1597","2584","4181","6765","10946","17711",
+"28657","46368","75025","121393","196418","317811","514228"]
 
-There are no automated checks for this application.  Treating the application as a black box, produce appropriate automated checks against the applications interfaces.  Consider that there is more than one interface into the application.
+Outofbounds index : 2147483648
 
-- Use only RestAssured or RestEasy to test the REST interface.
-- Use only JUnit as a test harness.
-- Ensure that your tests can be executed with an appropriate goal from Maven.
+============================================================================
+Fork:
+https://github.com/vindukatta/fibonacci-rest
 
-# To submit your test
-Either fork this repo and share the link, or submit commits to a branch.
+============================================================================
+Prereqs: Java must be installed and JAVA_HOME defined
+Goals: Defined 3 goals in POM - clean, compile, test. Run the following
+
+//prerequisite: start server
+mvn compile exec:java
+
+//run test
+mvn clean compile test
+
