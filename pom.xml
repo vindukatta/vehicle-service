@@ -95,7 +95,11 @@
 			<artifactId>poi</artifactId>
 			<version>3.16</version>
 		</dependency>
-        
+		 <dependency>
+    		<groupId>commons-io</groupId>
+    		<artifactId>commons-io</artifactId>
+    		<version>2.6</version>
+		</dependency>    
 
     </dependencies>
 
@@ -106,7 +110,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
-                    <mainClass>academy.dd.fibonacci.App</mainClass>
+                    <mainClass>uk.ide.dvla.App</mainClass>
                 </configuration>
             </plugin>
             <plugin>

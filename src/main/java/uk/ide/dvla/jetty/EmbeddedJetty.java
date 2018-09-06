@@ -7,7 +7,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 /**
- * Created by stevewalton on 20/07/2017.
+ * Created by indukatta on 06/09/2018.
  */
 public class EmbeddedJetty {
 
@@ -19,7 +19,7 @@ public class EmbeddedJetty {
 
     public void start() throws Exception {
         ResourceConfig resourceConfig = new ResourceConfig();
-        resourceConfig.packages("academy.dd.fibonacci.rest");
+        resourceConfig.packages("uk.ide.dvla.rest");
 
 
         ServletHolder restServlet = new ServletHolder(new ServletContainer(resourceConfig));
