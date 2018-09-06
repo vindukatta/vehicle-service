@@ -8,6 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class FileService {
 	  */
 	    @GET
 	    @Produces(MediaType.APPLICATION_JSON)
-	    public Response getStandardFibonacciSequence() throws IOException {
+	    public Response getListOfFiles() throws IOException {
 	    	List<String> listOfFiles = new ArrayList<String>();
 	    	final File folder = new File(".\\src\\main\\resources\\testfiles");
 	    	for (File fileEntry : folder.listFiles()) {
@@ -42,4 +43,20 @@ public class FileService {
 	        LOGGER.info(String.valueOf(listOfFiles));
 	        return Response.ok(JsonUtils.toString(listOfFiles)).build();
 	    }
+	    
+	    /**
+		  * Get method to return the exact file
+		  * returns file
+		  */
+		    @GET
+		    @Path("/file")
+		    @Produces(MediaType.APPLICATION_JSON)
+		    //public Response getFile(@QueryParam("fileName") String fileName) throws IOException {
+		    public Response getFile() throws IOException {
+		    	//List<String> listOfFiles = new ArrayList<String>();
+		    	File file = new File(".\\src\\main\\resources\\testfiles\\VehicleExcel.xlsx");
+		    	
+		        LOGGER.info(String.valueOf(file.getName()));
+		        return Response.ok().entity(new FileInputStream(file)).build();
+		    }
 }
