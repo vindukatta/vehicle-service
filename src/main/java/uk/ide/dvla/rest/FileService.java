@@ -24,6 +24,7 @@ import java.util.List;
 public class FileService {
 	
 	private static Logger LOGGER = LoggerFactory.getLogger(FileService.class);
+	private static String folderPath = ".\\src\\main\\resources\\testfiles\\";
 
 	/**
 	 * Get method to return list of files in the json format
@@ -33,7 +34,7 @@ public class FileService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getListOfFiles() throws IOException {
 		List<String> listOfFiles = new ArrayList<String>();
-		final File folder = new File(".\\src\\main\\resources\\testfiles");
+		final File folder = new File(folderPath);
 		for (File fileEntry : folder.listFiles()) {
 			if (fileEntry.isDirectory()) {
 
@@ -57,7 +58,7 @@ public class FileService {
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	public StreamingOutput  getFile(@QueryParam("fileName") String fileName) throws IOException {
 
-		File file = new File(".\\src\\main\\resources\\testfiles\\" + fileName);		    	
+		File file = new File(folderPath + fileName);		    	
 		LOGGER.info(String.valueOf(file.getName()));		        
 		return new FileStreamingOutput(file);
 	}
@@ -72,7 +73,7 @@ public class FileService {
 	@Path("/getExcelFile")
 	@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 	public Response  getExcelFile(@QueryParam("fileName") String fileName) throws IOException {
-		File file = new File(".\\src\\main\\resources\\testfiles\\" + fileName);	    	
+		File file = new File(folderPath + fileName);	    	
 		LOGGER.info(String.valueOf(file.getName()));
 		return Response.ok().entity(new FileInputStream(file)).build();
 	}
