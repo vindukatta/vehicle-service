@@ -23,63 +23,59 @@ import java.util.List;
 @Path("/getFiles")
 public class FileService {
 	
-	 private static Logger LOGGER = LoggerFactory.getLogger(FileService.class);
-	    
-	 /**
-	  * Get method to return list of files in the json format
-	  * returns filename : mimetype : size : file extension for each file
-	  */
-	    @GET
-	    @Produces(MediaType.APPLICATION_JSON)
-	    public Response getListOfFiles() throws IOException {
-	    	List<String> listOfFiles = new ArrayList<String>();
-	    	final File folder = new File(".\\src\\main\\resources\\testfiles");
-	    	for (File fileEntry : folder.listFiles()) {
-		        if (fileEntry.isDirectory()) {
-		            
-		        } else {
-		        	String fileAttr = fileEntry.getName() + " : " + Files.probeContentType(fileEntry.toPath()) + " : " + Long.toString(fileEntry.length()) + " : " + FilenameUtils.getExtension(fileEntry.getName());
-					listOfFiles.add(fileAttr);
-		        }
-	    	}
-	        LOGGER.info(String.valueOf(listOfFiles));
-	        return Response.ok(JsonUtils.toString(listOfFiles)).build();
-	    }
-	    
-	   
-	    /**
-		  * Get method to return the exact file
-		  * returns file
-		  */
-		    @GET
-		    @Path("/file")
-		    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-		    //@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-		    public StreamingOutput  getFile(@QueryParam("fileName") String fileName) throws IOException {
-		    	File file = new File(".\\src\\main\\resources\\testfiles\\" + fileName);
-		    	
-		        LOGGER.info(String.valueOf(file.getName()));
-		        //return Response.ok().entity(new FileInputStream(file)).build();
-		        /*ResponseBuilder response = Response.ok((Object) file);
-				response.header("Content-Disposition",
-					"attachment; filename=\"VehicleExcel.xlsx\"");
-				return response.build();*/
-		        return new FileStreamingOutput(file);
-		    }
-		    
-		    
-		    /**
-			  * Get method to return the exact file
-			  * returns file
-			  */
-			    @GET
-			    @Path("/getExcelFile")
-			    @Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-			    public Response  getExcelFile(@QueryParam("fileName") String fileName) throws IOException {
-			    	File file = new File(".\\src\\main\\resources\\testfiles\\" + fileName);	    	
-			        LOGGER.info(String.valueOf(file.getName()));
-			        return Response.ok().entity(new FileInputStream(file)).build();
-			    }
+	private static Logger LOGGER = LoggerFactory.getLogger(FileService.class);
+
+	/**
+	 * Get method to return list of files in the json format
+	 * @return JsonString filename : mimetype : size : file extension for each file
+	 */
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getListOfFiles() throws IOException {
+		List<String> listOfFiles = new ArrayList<String>();
+		final File folder = new File(".\\src\\main\\resources\\testfiles");
+		for (File fileEntry : folder.listFiles()) {
+			if (fileEntry.isDirectory()) {
+
+			} else {
+				String fileAttr = fileEntry.getName() + " : " + Files.probeContentType(fileEntry.toPath()) + " : " + Long.toString(fileEntry.length()) + " : " + FilenameUtils.getExtension(fileEntry.getName());
+				listOfFiles.add(fileAttr);
+			}
+		}
+		LOGGER.info(String.valueOf(listOfFiles));
+		return Response.ok(JsonUtils.toString(listOfFiles)).build();
+	}
+
+
+	/**
+	 * Get method to return the exact file
+	 * @param fileName
+	 * @return excelFile
+	 */
+	@GET
+	@Path("/file")
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	public StreamingOutput  getFile(@QueryParam("fileName") String fileName) throws IOException {
+
+		File file = new File(".\\src\\main\\resources\\testfiles\\" + fileName);		    	
+		LOGGER.info(String.valueOf(file.getName()));		        
+		return new FileStreamingOutput(file);
+	}
+
+
+	/**
+	 * Get method to return the excel file
+	 * @param fileName
+	 * @return excelFile
+	 */
+	@GET
+	@Path("/getExcelFile")
+	@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+	public Response  getExcelFile(@QueryParam("fileName") String fileName) throws IOException {
+		File file = new File(".\\src\\main\\resources\\testfiles\\" + fileName);	    	
+		LOGGER.info(String.valueOf(file.getName()));
+		return Response.ok().entity(new FileInputStream(file)).build();
+	}
 }
 
 
