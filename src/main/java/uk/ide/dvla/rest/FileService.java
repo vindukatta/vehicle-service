@@ -2,13 +2,11 @@ package uk.ide.dvla.rest;
 
 import uk.ide.dvla.json.JsonUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.glassfish.jersey.server.model.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.StreamingOutput;
 
 import java.io.File;
@@ -16,9 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by indukatta on 06/09/2018.
@@ -29,7 +25,6 @@ public class FileService {
 	
 	 private static Logger LOGGER = LoggerFactory.getLogger(FileService.class);
 	    
-	 private static Map<String, FileDetails> files = new HashMap();
 	 /**
 	  * Get method to return list of files in the json format
 	  * returns filename : mimetype : size : file extension for each file
@@ -51,40 +46,17 @@ public class FileService {
 	        return Response.ok(JsonUtils.toString(listOfFiles)).build();
 	    }
 	    
-	    @GET
-	    @Path("/getFiles1")
-	    @Produces(MediaType.APPLICATION_JSON)
-	    public List<FileDetails> getListOfFiles1() throws IOException {
-	    	
-	    	
-	    	
-	    	FileDetails file1 = new FileDetails();
-	    	file1.setFileName("Test.txt");
-	    	file1.setFileType("txt");
-	    	
-	    	FileDetails file2 = new FileDetails();
-	    	file2.setFileName("Test2.txt");
-	    	file2.setFileType("txt");
-	    	
-	    	//list.add(file1);
-	    	//list.add(file2);
-	    	
-	    	 files.put("11", file1);
-	    	 files.put("11", file2);
-	    	 List<FileDetails> list = new ArrayList<FileDetails>(files.values());
-	    	return list;        
-	    }
+	   
 	    /**
 		  * Get method to return the exact file
 		  * returns file
 		  */
 		    @GET
 		    @Path("/file")
-		    @Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-		    //public Response getFile(@QueryParam("fileName") String fileName) throws IOException {
-		    public StreamingOutput  getFile() throws IOException {
-		    	//List<String> listOfFiles = new ArrayList<String>();
-		    	File file = new File(".\\src\\main\\resources\\testfiles\\VehicleExcel.xlsx");
+		    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+		    //@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+		    public StreamingOutput  getFile(@QueryParam("fileName") String fileName) throws IOException {
+		    	File file = new File(".\\src\\main\\resources\\testfiles\\" + fileName);
 		    	
 		        LOGGER.info(String.valueOf(file.getName()));
 		        //return Response.ok().entity(new FileInputStream(file)).build();
@@ -94,6 +66,20 @@ public class FileService {
 				return response.build();*/
 		        return new FileStreamingOutput(file);
 		    }
+		    
+		    
+		    /**
+			  * Get method to return the exact file
+			  * returns file
+			  */
+			    @GET
+			    @Path("/getExcelFile")
+			    @Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+			    public Response  getExcelFile(@QueryParam("fileName") String fileName) throws IOException {
+			    	File file = new File(".\\src\\main\\resources\\testfiles\\" + fileName);	    	
+			        LOGGER.info(String.valueOf(file.getName()));
+			        return Response.ok().entity(new FileInputStream(file)).build();
+			    }
 }
 
 
