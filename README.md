@@ -2,7 +2,7 @@
 
 mvn compile exec:java
 
-#run test
+#run restassured test
 
 mvn clean compile test
 
